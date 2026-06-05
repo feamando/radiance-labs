@@ -59,10 +59,11 @@ section > p.lead{color:var(--ink-dim);max-width:680px;margin-bottom:40px;}
 #hero{
   position:relative;overflow:hidden;
   min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-  max-width:none;padding:120px 28px 80px;border-bottom:1px solid var(--border);
+  max-width:none;padding:120px 0 80px;border-bottom:1px solid var(--border);
 }
 #hero-canvas{position:absolute;top:0;right:0;width:50%;height:100%;opacity:.7;pointer-events:none;}
-#hero .inner{position:relative;z-index:1;max-width:920px;margin:0 auto;width:100%;}
+/* Split layout: text left-anchored (small indent matching the header), canvas right. */
+#hero .inner{position:relative;z-index:1;max-width:640px;margin:0;padding:0 clamp(28px,5vw,64px);}
 #hero .brand{display:flex;align-items:center;gap:14px;margin-bottom:40px;}
 #hero .brand-name{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);}
 #hero h1{font-family:"Inter",sans-serif;font-size:64px;line-height:1.08;font-weight:700;letter-spacing:-.03em;margin-bottom:28px;}
@@ -107,12 +108,14 @@ section > p.lead{color:var(--ink-dim);max-width:680px;margin-bottom:40px;}
 .group{margin-bottom:36px;}
 .group:last-child{margin-bottom:0;}
 
-/* application showcase images */
-.shots{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:28px;}
-@media(max-width:700px){.shots{grid-template-columns:1fr;}}
-.shots figure{margin:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#000;}
-.shots img{display:block;width:100%;height:auto;}
-.shots figcaption{font-family:"Inter",sans-serif;font-size:12px;color:var(--ink-dim);padding:10px 14px;border-top:1px solid var(--border);}
+/* a card that spans the full grid width (for Raum app + its screenshots) */
+.card.wide{grid-column:1 / -1;}
+/* screenshots embedded inside a product card */
+.card .shots{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px;}
+@media(max-width:700px){.card .shots{grid-template-columns:1fr;}}
+.card .shots figure{margin:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#000;}
+.card .shots img{display:block;width:100%;height:auto;}
+.card .shots figcaption{font-family:"Inter",sans-serif;font-size:11px;color:var(--ink-dim);padding:8px 12px;border-top:1px solid var(--border);}
 
 /* papers */
 .paper{display:block;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-bottom:16px;transition:border-color .2s;}
@@ -255,9 +258,19 @@ footer a{font-family:"Inter",sans-serif;font-size:14px;}
   <div class="group">
     <div class="group-label">Applications</div>
     <div class="grid two">
-      <div class="card">
+      <div class="card wide">
         <h3><span class="name">Raum</span> <span class="tag app">Application</span></h3>
         <p>The interactive pipeline &mdash; grammatic decomposition, semantic encoder, and real-time rendering of named, editable parts, with <code>.ply</code> export to game engines and 3D tools.</p>
+        <div class="shots">
+          <figure>
+            <img src="img/raum-castle-render.png" alt="Raum-generated Gaussian-splat castle on a hill" loading="lazy"/>
+            <figcaption>"A castle on a hill" &mdash; rendered as named Gaussian splats.</figcaption>
+          </figure>
+          <figure>
+            <img src="img/raum-app-ui.png" alt="Raum application: high-fidelity scene generation UI with composition tree" loading="lazy"/>
+            <figcaption>High-fidelity generation, composition tree, and <code>.ply</code> export.</figcaption>
+          </figure>
+        </div>
       </div>
       <div class="card">
         <h3><span class="name">Satz</span> <span class="tag app">Application</span></h3>
@@ -267,17 +280,6 @@ footer a{font-family:"Inter",sans-serif;font-size:14px;}
         <h3><span class="name">Klang</span> <span class="tag app">Application</span></h3>
         <p>The audio-synthesis surface of SGS: turning Gaussian-splat representations into sound &mdash; studio, voice, and field.</p>
       </div>
-    </div>
-
-    <div class="shots">
-      <figure>
-        <img src="img/raum-castle-render.png" alt="Raum-generated Gaussian-splat castle on a hill" loading="lazy"/>
-        <figcaption>Raum &mdash; "a castle on a hill", rendered as named Gaussian splats.</figcaption>
-      </figure>
-      <figure>
-        <img src="img/raum-app-ui.png" alt="Raum application: high-fidelity scene generation UI with composition tree" loading="lazy"/>
-        <figcaption>The Raum app &mdash; high-fidelity generation, composition tree, and <code>.ply</code> export.</figcaption>
-      </figure>
     </div>
   </div>
 </section>
