@@ -50,10 +50,10 @@ a:hover{color:var(--accent-coral);}
 @media(max-width:700px){.header-nav{display:none;}}
 
 /* ── Layout ── */
-section{max-width:920px;margin:0 auto;padding:80px 28px;border-bottom:1px solid var(--border);}
+section{max-width:920px;margin:0 auto;padding:72px 28px;}
 .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;font-weight:600;}
 h2{font-size:30px;font-weight:600;letter-spacing:-.01em;margin-bottom:10px;}
-section > p.lead{color:var(--ink-dim);max-width:680px;margin-bottom:36px;}
+section > p.lead{color:var(--ink-dim);max-width:680px;margin-bottom:40px;}
 
 /* ── Hero ── */
 #hero{
@@ -63,13 +63,13 @@ section > p.lead{color:var(--ink-dim);max-width:680px;margin-bottom:36px;}
 }
 #hero-canvas{position:absolute;top:0;right:0;width:50%;height:100%;opacity:.7;pointer-events:none;}
 #hero .inner{position:relative;z-index:1;max-width:920px;margin:0 auto;width:100%;}
-#hero .brand{display:flex;align-items:center;gap:14px;margin-bottom:36px;}
+#hero .brand{display:flex;align-items:center;gap:14px;margin-bottom:40px;}
 #hero .brand-name{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);}
-#hero h1{font-family:"Inter",sans-serif;font-size:64px;line-height:1.04;font-weight:700;letter-spacing:-.03em;margin-bottom:22px;}
+#hero h1{font-family:"Inter",sans-serif;font-size:64px;line-height:1.08;font-weight:700;letter-spacing:-.03em;margin-bottom:28px;}
 #hero h1 .accent{color:var(--accent);}
-#hero .sub{font-size:20px;color:var(--ink);max-width:600px;}
+#hero .sub{font-size:20px;line-height:1.6;color:var(--ink);max-width:48ch;}
 #hero .sub .dim{color:var(--ink-dim);}
-@media(max-width:700px){#hero h1{font-size:40px;}#hero-canvas{width:100%;opacity:.35;}}
+@media(max-width:700px){#hero h1{font-size:40px;}#hero-canvas{width:100%;opacity:.35;}#hero .sub{max-width:100%;}}
 
 /* ── Cards ── */
 .grid{display:grid;gap:18px;}
@@ -84,15 +84,35 @@ section > p.lead{color:var(--ink-dim);max-width:680px;margin-bottom:36px;}
 .card h3 .name{color:var(--ink);}
 .card p{font-size:15px;color:var(--ink-dim);line-height:1.55;}
 .tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding:2px 8px;border-radius:20px;}
-.tag.live{color:var(--green);border:1px solid var(--green);}
-.tag.wip{color:var(--accent);border:1px solid var(--accent);}
-.tag.research{color:var(--accent-coral);border:1px solid var(--accent-coral);}
+/* Consistent colour code: Models = green, Applications = coral/red. */
+.tag.model{color:var(--green);border:1px solid var(--green);}
+.tag.app{color:var(--accent-coral);border:1px solid var(--accent-coral);}
+.tag.wip{color:var(--green);border:1px solid var(--green);opacity:.7;}
 
-/* research list */
-.research-item{padding:16px 0;border-bottom:1px solid var(--border);}
-.research-item:last-child{border-bottom:none;}
-.research-item h3{font-family:"Inter",sans-serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:6px;}
-.research-item p{color:var(--ink-dim);font-size:16px;}
+/* research themes */
+.theme{margin-bottom:40px;}
+.theme:last-child{margin-bottom:0;}
+.theme > h3{font-family:"Inter",sans-serif;font-size:20px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.theme > p.theme-lead{color:var(--ink-dim);font-size:16px;margin-bottom:20px;max-width:680px;}
+.subgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:700px){.subgrid{grid-template-columns:1fr;}}
+.subitem{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px 18px;transition:border-color .2s;}
+.subitem:hover{border-color:var(--accent);}
+.subitem .k{font-family:"Inter",sans-serif;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.subitem .d{font-size:14px;color:var(--ink-dim);line-height:1.5;}
+
+/* product groups */
+.group-label{font-family:"Inter",sans-serif;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 16px;display:flex;align-items:center;gap:10px;}
+.group-label::after{content:"";flex:1;height:1px;background:var(--border);}
+.group{margin-bottom:36px;}
+.group:last-child{margin-bottom:0;}
+
+/* application showcase images */
+.shots{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:28px;}
+@media(max-width:700px){.shots{grid-template-columns:1fr;}}
+.shots figure{margin:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#000;}
+.shots img{display:block;width:100%;height:auto;}
+.shots figcaption{font-family:"Inter",sans-serif;font-size:12px;color:var(--ink-dim);padding:10px 14px;border-top:1px solid var(--border);}
 
 /* papers */
 .paper{display:block;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-bottom:16px;transition:border-color .2s;}
@@ -157,13 +177,50 @@ footer a{font-family:"Inter",sans-serif;font-size:14px;}
   <h2>What we study</h2>
   <p class="lead">Two intertwined programs: the foundations of an alternative model architecture, and its first application to structured 3D generation.</p>
 
-  <div class="research-item">
+  <div class="theme">
     <h3>Foundational model research</h3>
-    <p>An alternative architecture to the transformer &mdash; Semantic Gaussian Splatting (SGS). We study the expressiveness of alpha-compositing as the weighting mechanism inside language models (proven a strict superset of softmax attention), and "blobs": Gaussian splats that encode semantic, visual, and physical properties. The unifying idea is transmittance-based rendering as a single substrate for both semantic and physical computation.</p>
+    <p class="theme-lead">Semantic Gaussian Splatting (SGS) &mdash; an alternative architecture to the transformer, where one Gaussian primitive carries meaning, appearance, and behaviour.</p>
+    <div class="subgrid">
+      <div class="subitem">
+        <div class="k">Alpha-compositing expressiveness</div>
+        <div class="d">Studying volume-rendering's weighting equation as the mechanism inside LLMs &mdash; proven a strict superset of softmax attention.</div>
+      </div>
+      <div class="subitem">
+        <div class="k">Gaussian-splat blobs</div>
+        <div class="d">Splats as units of knowledge, encoding semantic, visual, and physical properties in one primitive.</div>
+      </div>
+      <div class="subitem">
+        <div class="k">Transmittance-based rendering</div>
+        <div class="d">One substrate for both semantic and physical computation, governed by accumulated transmittance.</div>
+      </div>
+      <div class="subitem">
+        <div class="k">Physical-property encoding</div>
+        <div class="d">Extending the primitive with material semantics so the scene that renders also simulates.</div>
+      </div>
+    </div>
   </div>
-  <div class="research-item">
-    <h3>Prompt-to-3D Gaussian-splat scene generation</h3>
-    <p>Turning natural language into structured 3D. A language model extracts the semantics of a prompt, recursively decomposes it into a composition tree, and renders each named part as Gaussian splats &mdash; producing scenes that are editable, queryable, and exportable rather than a single opaque blob.</p>
+
+  <div class="theme">
+    <h3>Prompt-to-3D scene generation</h3>
+    <p class="theme-lead">Turning natural language into structured, editable 3D &mdash; named parts instead of a single opaque blob.</p>
+    <div class="subgrid">
+      <div class="subitem">
+        <div class="k">Semantic extraction</div>
+        <div class="d">A language model reads the meaning of a prompt and the entities it implies.</div>
+      </div>
+      <div class="subitem">
+        <div class="k">Recursive decomposition</div>
+        <div class="d">The prompt becomes a composition tree: each named concept expands into sub-parts down to individual primitives.</div>
+      </div>
+      <div class="subitem">
+        <div class="k">Gaussian-splat rendering</div>
+        <div class="d">Each leaf renders as positioned splats; the tree itself is the editable, queryable representation.</div>
+      </div>
+      <div class="subitem">
+        <div class="k">Export &amp; reuse</div>
+        <div class="d">Scenes export to standard 3D formats, so parts can be edited and reused rather than regenerated.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -173,26 +230,54 @@ footer a{font-family:"Inter",sans-serif;font-size:14px;}
   <h2>What we build</h2>
   <p class="lead">Models and applications that put the research to work, from a browser-sized base model to a full text-to-3D pipeline.</p>
 
-  <div class="grid two">
-    <div class="card">
-      <h3><span class="name">Planck</span> <span class="tag live">Model</span></h3>
-      <p>A nano-scale base model &mdash; ~100M parameters, trained on Wikipedia. The reference SGS language model and the testbed for blob-based retrieval.</p>
+  <div class="group">
+    <div class="group-label">Models</div>
+    <div class="grid two">
+      <div class="card">
+        <h3><span class="name">Planck</span> <span class="tag model">Model</span></h3>
+        <p>A nano-scale base model &mdash; ~100M parameters, trained on Wikipedia. The reference SGS language model and the testbed for blob-based retrieval.</p>
+      </div>
+      <div class="card">
+        <h3><span class="name">Hertz</span> <span class="tag wip">Model · In&nbsp;Progress</span></h3>
+        <p>The next-scale SGS language model &mdash; targeting ~1 billion parameters. The base that Raum will run on.</p>
+      </div>
+      <div class="card">
+        <h3><span class="name">Raum</span> <span class="tag model">Model</span></h3>
+        <p>The text-to-3D model: prompt-conditioned generation of Gaussian-splat scenes via recursive semantic-to-geometric decomposition.</p>
+      </div>
+      <div class="card">
+        <h3><span class="name">Klang</span> <span class="tag model">Model</span></h3>
+        <p>SGS multimodality: encoding audio as Gaussian splats. Probing whether the same primitive that renders meaning and geometry can also synthesize sound.</p>
+      </div>
     </div>
-    <div class="card">
-      <h3><span class="name">Raum</span> <span class="tag research">Model</span></h3>
-      <p>The text-to-3D model: prompt-conditioned generation of Gaussian-splat scenes via recursive semantic-to-geometric decomposition.</p>
+  </div>
+
+  <div class="group">
+    <div class="group-label">Applications</div>
+    <div class="grid two">
+      <div class="card">
+        <h3><span class="name">Raum</span> <span class="tag app">Application</span></h3>
+        <p>The interactive pipeline &mdash; grammatic decomposition, semantic encoder, and real-time rendering of named, editable parts, with <code>.ply</code> export to game engines and 3D tools.</p>
+      </div>
+      <div class="card">
+        <h3><span class="name">Satz</span> <span class="tag app">Application</span></h3>
+        <p>Browser-native chat and generation on the SGS base model &mdash; Planck running locally, Hertz served via API.</p>
+      </div>
+      <div class="card">
+        <h3><span class="name">Klang</span> <span class="tag app">Application</span></h3>
+        <p>The audio-synthesis surface of SGS: turning Gaussian-splat representations into sound &mdash; studio, voice, and field.</p>
+      </div>
     </div>
-    <div class="card">
-      <h3><span class="name">Raum</span> <span class="tag live">Application</span></h3>
-      <p>The interactive pipeline &mdash; grammatic decomposition, semantic encoder, and real-time rendering of named, editable parts, with <code>.ply</code> export to game engines and 3D tools.</p>
-    </div>
-    <div class="card">
-      <h3><span class="name">Klang</span> <span class="tag research">Research</span></h3>
-      <p>SGS multimodality: encoding audio as Gaussian splats. Probing whether the same primitive that renders meaning and geometry can also synthesize sound.</p>
-    </div>
-    <div class="card">
-      <h3><span class="name">Hertz</span> <span class="tag wip">In Progress</span></h3>
-      <p>The next-scale SGS language model &mdash; targeting ~1 billion parameters. The base that Raum will run on.</p>
+
+    <div class="shots">
+      <figure>
+        <img src="img/raum-castle-render.png" alt="Raum-generated Gaussian-splat castle on a hill" loading="lazy"/>
+        <figcaption>Raum &mdash; "a castle on a hill", rendered as named Gaussian splats.</figcaption>
+      </figure>
+      <figure>
+        <img src="img/raum-app-ui.png" alt="Raum application: high-fidelity scene generation UI with composition tree" loading="lazy"/>
+        <figcaption>The Raum app &mdash; high-fidelity generation, composition tree, and <code>.ply</code> export.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
