@@ -336,7 +336,10 @@ void main(){
   float t=.5*u_time;vec2 uv=gl_FragCoord.xy/u_resolution.xy;uv-=.5;uv+=u_offset;
   float pxSize=u_pxSize;vec2 pxSizeUv=gl_FragCoord.xy;pxSizeUv-=.5*u_resolution;pxSizeUv/=pxSize;
   vec2 pixelizedUv=floor(pxSizeUv)*pxSize/u_resolution.xy;pixelizedUv+=.5;pixelizedUv-=.5;pixelizedUv+=u_offset;
-  vec2 shape_uv=pixelizedUv*2.0;
+  // Aspect-correct so the splats stay circular on any canvas ratio
+  // (without this, a tall hero canvas stretches them vertically).
+  vec2 aspectScale=u_resolution/min(u_resolution.x,u_resolution.y);
+  vec2 shape_uv=pixelizedUv*2.0*aspectScale;
   float d=1.0-pow(length(shape_uv),2.0);
   vec3 pos=vec3(shape_uv,sqrt(max(d,0.0)));
   vec3 lp=normalize(vec3(cos(1.5*t),0.8,sin(1.25*t)));
