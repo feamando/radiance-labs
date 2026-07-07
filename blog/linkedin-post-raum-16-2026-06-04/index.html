@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://rsms.me/"/>
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&display=swap" rel="stylesheet"/>
+<title>Raum 1.6 / 0.6: a castle from a sentence — Radiance Labs</title>
+<meta name="description" content="Raum 1.5 could generate a castle from the words &quot;a castle on a hill&quot;. It had two problems. It collapsed every prompt onto the same template, so &quot;a wall with a gate&quot; also produced a whole castle. And ..."/>
+<style>
+:root{
+  --bg:#0a0a0f;--panel:#12121a;--ink:#f5f1e8;--ink-dim:#8a8598;
+  --accent:#ffb347;--accent-coral:#ff6b6b;--border:#1f1f2a;--green:#4ade80;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--bg);color:var(--ink);scroll-behavior:smooth;}
+body{font-family:"Source Serif 4",Georgia,serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,.brand-name,.header-brand-name,nav a,.eyebrow,.tag,.post-date,.back-link{font-family:"Inter",-apple-system,sans-serif;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{color:var(--accent-coral);}
+
+.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,15,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:12px 28px;}
+.header-brand{display:flex;align-items:center;gap:10px;}
+.header-brand-name{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);}
+.header-nav{display:flex;gap:22px;list-style:none;}
+.header-nav a{font-size:12px;color:var(--ink-dim);letter-spacing:.05em;text-transform:uppercase;transition:color .2s;}
+.header-nav a:hover{color:var(--accent);}
+@media(max-width:700px){.header-nav{display:none;}}
+.logo-svg{flex-shrink:0;}
+
+section{max-width:920px;margin:0 auto;padding:72px 28px;}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;font-weight:600;}
+h2{font-size:30px;font-weight:600;letter-spacing:-.01em;margin-bottom:10px;}
+section > p.lead{color:var(--ink-dim);max-width:680px;margin-bottom:40px;}
+
+.blog-top{padding-top:104px;}
+
+/* feed */
+.feed{display:flex;flex-direction:column;gap:16px;}
+.post-card{display:block;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px 26px;transition:border-color .2s,transform .2s;}
+.post-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.post-card .post-date{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.post-card h3{font-family:"Inter",sans-serif;font-size:20px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:8px;}
+.post-card p{font-size:16px;color:var(--ink-dim);line-height:1.55;}
+.post-card .arrow{color:var(--accent);font-family:"Inter",sans-serif;font-size:13px;font-weight:600;margin-top:12px;display:inline-block;}
+
+.year-label{font-family:"Inter",sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);margin:28px 0 4px;display:flex;align-items:center;gap:12px;}
+.year-label::after{content:"";flex:1;height:1px;background:var(--border);}
+.year-label:first-child{margin-top:0;}
+
+/* detail */
+.back-link{display:inline-block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:28px;transition:color .2s;}
+.back-link:hover{color:var(--accent);}
+article .post-date{font-family:"Inter",sans-serif;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+article h1{font-family:"Inter",sans-serif;font-size:38px;line-height:1.15;font-weight:700;letter-spacing:-.02em;margin-bottom:14px;}
+@media(max-width:700px){article h1{font-size:28px;}}
+article .byline{color:var(--ink-dim);font-size:14px;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+article h2{font-size:24px;margin:40px 0 12px;}
+article h3{font-family:"Inter",sans-serif;font-size:18px;font-weight:600;margin:32px 0 10px;}
+article p{margin-bottom:18px;}
+article ul,article ol{margin:0 0 18px 24px;}
+article li{margin-bottom:8px;}
+article strong{color:var(--ink);}
+article pre{background:#0d0d14;border:1px solid var(--border);border-radius:10px;padding:18px 20px;overflow-x:auto;margin-bottom:22px;}
+article pre code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.5;color:var(--ink-dim);white-space:pre;}
+article figure{margin:28px 0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#000;}
+article figure img{display:block;width:100%;height:auto;}
+article figure figcaption{font-family:"Inter",sans-serif;font-size:12px;color:var(--ink-dim);padding:10px 16px;border-top:1px solid var(--border);}
+
+footer{max-width:920px;margin:0 auto;padding:56px 28px 80px;color:var(--ink-dim);font-size:15px;border-top:1px solid var(--border);}
+footer .row{display:flex;flex-wrap:wrap;gap:8px 28px;align-items:center;}
+footer .heart{color:var(--accent-coral);}
+footer a{font-family:"Inter",sans-serif;font-size:14px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../" class="header-brand">
+    <svg class="logo-svg" width="30" height="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <circle cx="14" cy="16" r="10" fill="#ffb347" opacity="0.5"/>
+  <circle cx="20" cy="13" r="8" fill="#ff6b6b" opacity="0.45"/>
+  <circle cx="18" cy="20" r="7" fill="#ffb347" opacity="0.4"/>
+  <circle cx="12" cy="12" r="5" fill="#f5f1e8" opacity="0.35"/>
+  <circle cx="22" cy="19" r="4" fill="#f5f1e8" opacity="0.3"/>
+</svg>
+    <span class="header-brand-name">Radiance Labs</span>
+  </a>
+  <nav><ul class="header-nav"><li><a href="../../">Home</a></li><li><a href="../">Blog</a></li></ul></nav>
+</header>
+<section class="blog-top">
+  <a class="back-link" href="../">&larr; All posts</a>
+  <article>
+    <div class="post-date">June 4, 2026</div>
+    <h1>Raum 1.6 / 0.6: a castle from a sentence</h1>
+    <div class="byline">Nikita Gorshkov &middot; Radiance Labs</div>
+    <p>Raum 1.5 could generate a castle from the words &quot;a castle on a hill&quot;. It had
+two problems. It collapsed every prompt onto the same template, so &quot;a wall with
+a gate&quot; also produced a whole castle. And it rendered as flat coloured dots.</p>
+<p>Raum 1.6 + 0.6 fixed both. Here is what changed, what broke along the way, and
+where it landed.</p>
+<p>What we changed from 1.5.</p>
+<p>Accuracy. The 1.5 decomposer was trained on two scenes (castle, tower), castle
+dominant, so it learned one answer. We rebuilt the training data around a
+SceneSpec: a structured description that generates the tree AND the prompt text
+from the same source, so they can never disagree. Every element became a
+standalone labelled scene (wall, gate, door, window, arrow slit, arch, tower,
+keep, gatehouse, hill, cliff, tree), and the prompts describe counts and
+presence (&quot;a castle with two towers&quot;, &quot;a fort without trees&quot;). 21,000 records,
+retrained the decomposer on the frozen Planck 1.3 base, validation loss 0.107.</p>
+<p>Realism. The viewer drew every Gaussian as a flat screen-facing disc. We
+replaced it with lit, oriented ellipsoid splats sized per Gaussian, with sun,
+fill, and hemisphere light for shading. Walls became courses of flat
+slab-stones. Windows and arrow slits are carved into the wall faces.</p>
+<p>What we encountered and learned.</p>
+<p>Most of the work was downstream of the model. The decomposer was fine. The
+failures were in the plumbing between a clean tree and a rendered scene, and
+each one taught something.</p>
+<p>The model derails. At temperature 0.3 it occasionally picked a bad token
+mid-tree and never recovered, emitting broken JSON. Structured output wants
+near-greedy decoding. Greedy first, with a retry, removed the flakiness.</p>
+<p>The model is reliable about WHAT, noisy about WHERE. It names the right parts
+(four towers, four walls, a keep) but places them loosely. So the model chooses
+composition and the grammar snaps the layout: towers to the wall-ring corners,
+walls to the faces, keep to the centre. Snapping position alone was not enough;
+the model&#x27;s noisy scales had to be snapped too, or towers came out stretched.</p>
+<p>Refinement was hurting, not helping. An SGS step pulled clusters toward
+matched template scans by Chamfer distance. It was built for messy inputs.
+Against clean snapped geometry it only dragged things toward random scans and
+distorted them. Turning it off was a fix.</p>
+<p>Real scans are not a free win. We routed parts to the 109 real architecture
+scans, expecting a realism jump. The scans are low-resolution ruin fragments,
+and stretched to a part&#x27;s footprint they read as worse than the hand-built
+geometry. The lesson is that &quot;use real data&quot; only helps when the data is good
+enough. It stays an option, off by default.</p>
+<p>And one clean bug. Walls kept cutting through the castle centre instead of
+ringing the towers. The scene flattener applied a node&#x27;s scale to its child
+positions but never its rotation, so a wall yawed to run along one axis kept
+running along the other. One missing quaternion rotation.</p>
+<p>The result.</p>
+<p>&quot;a castle on a hill&quot; typed into the demo produces a castle on a hill. Four
+corner towers with conical roofs, walls forming the perimeter between them, a
+keep, on a dense green dome with trees on the slope. &quot;a wall with a gate&quot;
+produces a gated wall. &quot;a tower on a hill&quot; produces a tower. The prompt
+controls the scene.</p>
+<p>The honest limit is that the geometry is hand-authored procedural primitives,
+and hand-tuning constants (tower proportion, roof height, hill size) is the
+ceiling. It does not generalise to arbitrary structures, and the scan
+experiment showed that swapping in low-quality real geometry is not the answer.
+The next iteration is about learning proportions and geometry rather than
+tuning them by eye.</p>
+<p>For now: text in, a recognisable castle out, rendered as lit stone. That was
+the goal.</p>
+    
+  </article>
+</section>
+<footer>
+  <div class="row">
+    <span>Built with <span class="heart">&hearts;</span> in Berlin</span>
+    <a href="https://github.com/feamando/sgs">github.com/feamando/sgs</a>
+    <span>Nikita Gorshkov</span>
+    <a href="mailto:ngorshkov@proton.me">ngorshkov@proton.me</a>
+  </div>
+</footer>
+</body>
+</html>

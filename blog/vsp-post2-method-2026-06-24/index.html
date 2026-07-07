@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://rsms.me/"/>
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&display=swap" rel="stylesheet"/>
+<title>The VSP method: four experiments, one decision — Radiance Labs</title>
+<meta name="description" content="A follow-up on the token representation we are testing at Radiance Labs ..."/>
+<style>
+:root{
+  --bg:#0a0a0f;--panel:#12121a;--ink:#f5f1e8;--ink-dim:#8a8598;
+  --accent:#ffb347;--accent-coral:#ff6b6b;--border:#1f1f2a;--green:#4ade80;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--bg);color:var(--ink);scroll-behavior:smooth;}
+body{font-family:"Source Serif 4",Georgia,serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,.brand-name,.header-brand-name,nav a,.eyebrow,.tag,.post-date,.back-link{font-family:"Inter",-apple-system,sans-serif;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{color:var(--accent-coral);}
+
+.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,15,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:12px 28px;}
+.header-brand{display:flex;align-items:center;gap:10px;}
+.header-brand-name{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);}
+.header-nav{display:flex;gap:22px;list-style:none;}
+.header-nav a{font-size:12px;color:var(--ink-dim);letter-spacing:.05em;text-transform:uppercase;transition:color .2s;}
+.header-nav a:hover{color:var(--accent);}
+@media(max-width:700px){.header-nav{display:none;}}
+.logo-svg{flex-shrink:0;}
+
+section{max-width:920px;margin:0 auto;padding:72px 28px;}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;font-weight:600;}
+h2{font-size:30px;font-weight:600;letter-spacing:-.01em;margin-bottom:10px;}
+section > p.lead{color:var(--ink-dim);max-width:680px;margin-bottom:40px;}
+
+.blog-top{padding-top:104px;}
+
+/* feed */
+.feed{display:flex;flex-direction:column;gap:16px;}
+.post-card{display:block;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px 26px;transition:border-color .2s,transform .2s;}
+.post-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.post-card .post-date{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.post-card h3{font-family:"Inter",sans-serif;font-size:20px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:8px;}
+.post-card p{font-size:16px;color:var(--ink-dim);line-height:1.55;}
+.post-card .arrow{color:var(--accent);font-family:"Inter",sans-serif;font-size:13px;font-weight:600;margin-top:12px;display:inline-block;}
+
+.year-label{font-family:"Inter",sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);margin:28px 0 4px;display:flex;align-items:center;gap:12px;}
+.year-label::after{content:"";flex:1;height:1px;background:var(--border);}
+.year-label:first-child{margin-top:0;}
+
+/* detail */
+.back-link{display:inline-block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:28px;transition:color .2s;}
+.back-link:hover{color:var(--accent);}
+article .post-date{font-family:"Inter",sans-serif;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+article h1{font-family:"Inter",sans-serif;font-size:38px;line-height:1.15;font-weight:700;letter-spacing:-.02em;margin-bottom:14px;}
+@media(max-width:700px){article h1{font-size:28px;}}
+article .byline{color:var(--ink-dim);font-size:14px;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+article h2{font-size:24px;margin:40px 0 12px;}
+article h3{font-family:"Inter",sans-serif;font-size:18px;font-weight:600;margin:32px 0 10px;}
+article p{margin-bottom:18px;}
+article ul,article ol{margin:0 0 18px 24px;}
+article li{margin-bottom:8px;}
+article strong{color:var(--ink);}
+article pre{background:#0d0d14;border:1px solid var(--border);border-radius:10px;padding:18px 20px;overflow-x:auto;margin-bottom:22px;}
+article pre code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.5;color:var(--ink-dim);white-space:pre;}
+article figure{margin:28px 0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#000;}
+article figure img{display:block;width:100%;height:auto;}
+article figure figcaption{font-family:"Inter",sans-serif;font-size:12px;color:var(--ink-dim);padding:10px 16px;border-top:1px solid var(--border);}
+
+footer{max-width:920px;margin:0 auto;padding:56px 28px 80px;color:var(--ink-dim);font-size:15px;border-top:1px solid var(--border);}
+footer .row{display:flex;flex-wrap:wrap;gap:8px 28px;align-items:center;}
+footer .heart{color:var(--accent-coral);}
+footer a{font-family:"Inter",sans-serif;font-size:14px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../" class="header-brand">
+    <svg class="logo-svg" width="30" height="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <circle cx="14" cy="16" r="10" fill="#ffb347" opacity="0.5"/>
+  <circle cx="20" cy="13" r="8" fill="#ff6b6b" opacity="0.45"/>
+  <circle cx="18" cy="20" r="7" fill="#ffb347" opacity="0.4"/>
+  <circle cx="12" cy="12" r="5" fill="#f5f1e8" opacity="0.35"/>
+  <circle cx="22" cy="19" r="4" fill="#f5f1e8" opacity="0.3"/>
+</svg>
+    <span class="header-brand-name">Radiance Labs</span>
+  </a>
+  <nav><ul class="header-nav"><li><a href="../../">Home</a></li><li><a href="../">Blog</a></li></ul></nav>
+</header>
+<section class="blog-top">
+  <a class="back-link" href="../">&larr; All posts</a>
+  <article>
+    <div class="post-date">June 24, 2026</div>
+    <h1>The VSP method: four experiments, one decision</h1>
+    <div class="byline">Nikita Gorshkov &middot; Radiance Labs</div>
+    <p>A follow-up on the token representation we are testing at Radiance Labs.</p>
+<p>The claim to check: a token carrying what a thing looks like (V), means (S), and is made of (P) should separate senses that a normal embedding merges. The test case is &quot;crane the bird&quot; versus &quot;crane the machine&quot;.</p>
+<p>Before training anything, we ran a small separation test four ways and measured how far apart the two senses landed.</p>
+<ol><li>Hand-written V and P: separated well (0.48), but we wrote the labels, so this mostly confirms the setup, not the idea.</li><li>V and P derived from the word&#x27;s text embedding: did not separate (0.13). The hardest cases share spelling, and text alone cannot tell them apart.</li><li>V from a fixed 3D-object category id: separated (0.41), but largely because different ids are different by definition. It also limits us to a small set of categories.</li><li>V from a vision-language model reading the word as text: did not separate (0.18).</li></ol>
+<p>The pattern: anything derived from text collapses the two senses. Images do not, since a picture of a bird and a picture of a construction crane are visually unrelated.</p>
+<p>So the next step is to ground the visual part in generated images rather than text or a fixed category list. The plan is to enumerate a word&#x27;s senses, generate views of each, embed them, and keep the senses that occupy clearly different regions of image space.</p>
+<p>That test runs next on real generated views. If it holds, it informs our next model and a short write-up. If it does not, we will say so.</p>
+    <figure><img src="../assets/vsp_grounding.svg" alt="Four ways to build the visual grounding, and which ones cheat." loading="lazy"/><figcaption>Four ways to build the visual grounding, and which ones cheat.</figcaption></figure>
+
+  </article>
+</section>
+<footer>
+  <div class="row">
+    <span>Built with <span class="heart">&hearts;</span> in Berlin</span>
+    <a href="https://github.com/feamando/sgs">github.com/feamando/sgs</a>
+    <span>Nikita Gorshkov</span>
+    <a href="mailto:ngorshkov@proton.me">ngorshkov@proton.me</a>
+  </div>
+</footer>
+</body>
+</html>

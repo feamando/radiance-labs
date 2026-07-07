@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://rsms.me/"/>
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&display=swap" rel="stylesheet"/>
+<title>Klang Variant A: an audio track for Semantic Gaussian Splatting — Radiance Labs</title>
+<meta name="description" content="Earlier posts in this thread introduced Semantic Gaussian Splatting, the idea that the compositing math behind 3D Gaussian Splatting transfers cleanly to sequence modelling, along with early ..."/>
+<style>
+:root{
+  --bg:#0a0a0f;--panel:#12121a;--ink:#f5f1e8;--ink-dim:#8a8598;
+  --accent:#ffb347;--accent-coral:#ff6b6b;--border:#1f1f2a;--green:#4ade80;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--bg);color:var(--ink);scroll-behavior:smooth;}
+body{font-family:"Source Serif 4",Georgia,serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,.brand-name,.header-brand-name,nav a,.eyebrow,.tag,.post-date,.back-link{font-family:"Inter",-apple-system,sans-serif;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{color:var(--accent-coral);}
+
+.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,15,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:12px 28px;}
+.header-brand{display:flex;align-items:center;gap:10px;}
+.header-brand-name{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);}
+.header-nav{display:flex;gap:22px;list-style:none;}
+.header-nav a{font-size:12px;color:var(--ink-dim);letter-spacing:.05em;text-transform:uppercase;transition:color .2s;}
+.header-nav a:hover{color:var(--accent);}
+@media(max-width:700px){.header-nav{display:none;}}
+.logo-svg{flex-shrink:0;}
+
+section{max-width:920px;margin:0 auto;padding:72px 28px;}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;font-weight:600;}
+h2{font-size:30px;font-weight:600;letter-spacing:-.01em;margin-bottom:10px;}
+section > p.lead{color:var(--ink-dim);max-width:680px;margin-bottom:40px;}
+
+.blog-top{padding-top:104px;}
+
+/* feed */
+.feed{display:flex;flex-direction:column;gap:16px;}
+.post-card{display:block;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px 26px;transition:border-color .2s,transform .2s;}
+.post-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.post-card .post-date{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.post-card h3{font-family:"Inter",sans-serif;font-size:20px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:8px;}
+.post-card p{font-size:16px;color:var(--ink-dim);line-height:1.55;}
+.post-card .arrow{color:var(--accent);font-family:"Inter",sans-serif;font-size:13px;font-weight:600;margin-top:12px;display:inline-block;}
+
+.year-label{font-family:"Inter",sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);margin:28px 0 4px;display:flex;align-items:center;gap:12px;}
+.year-label::after{content:"";flex:1;height:1px;background:var(--border);}
+.year-label:first-child{margin-top:0;}
+
+/* detail */
+.back-link{display:inline-block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:28px;transition:color .2s;}
+.back-link:hover{color:var(--accent);}
+article .post-date{font-family:"Inter",sans-serif;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+article h1{font-family:"Inter",sans-serif;font-size:38px;line-height:1.15;font-weight:700;letter-spacing:-.02em;margin-bottom:14px;}
+@media(max-width:700px){article h1{font-size:28px;}}
+article .byline{color:var(--ink-dim);font-size:14px;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+article h2{font-size:24px;margin:40px 0 12px;}
+article h3{font-family:"Inter",sans-serif;font-size:18px;font-weight:600;margin:32px 0 10px;}
+article p{margin-bottom:18px;}
+article ul,article ol{margin:0 0 18px 24px;}
+article li{margin-bottom:8px;}
+article strong{color:var(--ink);}
+article pre{background:#0d0d14;border:1px solid var(--border);border-radius:10px;padding:18px 20px;overflow-x:auto;margin-bottom:22px;}
+article pre code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.5;color:var(--ink-dim);white-space:pre;}
+article figure{margin:28px 0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#000;}
+article figure img{display:block;width:100%;height:auto;}
+article figure figcaption{font-family:"Inter",sans-serif;font-size:12px;color:var(--ink-dim);padding:10px 16px;border-top:1px solid var(--border);}
+
+footer{max-width:920px;margin:0 auto;padding:56px 28px 80px;color:var(--ink-dim);font-size:15px;border-top:1px solid var(--border);}
+footer .row{display:flex;flex-wrap:wrap;gap:8px 28px;align-items:center;}
+footer .heart{color:var(--accent-coral);}
+footer a{font-family:"Inter",sans-serif;font-size:14px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../" class="header-brand">
+    <svg class="logo-svg" width="30" height="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <circle cx="14" cy="16" r="10" fill="#ffb347" opacity="0.5"/>
+  <circle cx="20" cy="13" r="8" fill="#ff6b6b" opacity="0.45"/>
+  <circle cx="18" cy="20" r="7" fill="#ffb347" opacity="0.4"/>
+  <circle cx="12" cy="12" r="5" fill="#f5f1e8" opacity="0.35"/>
+  <circle cx="22" cy="19" r="4" fill="#f5f1e8" opacity="0.3"/>
+</svg>
+    <span class="header-brand-name">Radiance Labs</span>
+  </a>
+  <nav><ul class="header-nav"><li><a href="../../">Home</a></li><li><a href="../">Blog</a></li></ul></nav>
+</header>
+<section class="blog-top">
+  <a class="back-link" href="../">&larr; All posts</a>
+  <article>
+    <div class="post-date">April 23, 2026</div>
+    <h1>Klang Variant A: an audio track for Semantic Gaussian Splatting</h1>
+    <div class="byline">Nikita Gorshkov &middot; Radiance Labs</div>
+    <p>Continuing the SGS series.</p>
+<p>Earlier posts in this thread introduced Semantic Gaussian Splatting, the idea
+that the compositing math behind 3D Gaussian Splatting transfers cleanly to
+sequence modelling, along with early experiments on Planck, our small language
+model built on that foundation. Those posts made the case for SGS as an
+alternative to attention for text.</p>
+<p>One claim deserved a separate test. If SGS is a real representational
+primitive, it should not be text-only. It should behave in informative ways on
+other modalities, whether it succeeds or fails. So I opened a second track,
+Klang, to stress the multimodality claim on audio.</p>
+<p>Variant A was the most direct translation possible. Treat the STFT magnitude
+of a short speech clip as a 2D &quot;image,&quot; scatter several thousand tiny
+Gaussians across it, and fit their positions, bandwidths, and amplitudes with
+the same splatting math used in 3D. No architectural novelty. The question
+was simply whether the primitive carries over.</p>
+<p>Result: the primitive carries over. The audio does not follow completely.
+Reconstructions at 1500 and 3000 Gaussians fit magnitude well. The loss
+curves converge. Speech is comprehensible. What is consistently wrong is
+phase. The splat represents only magnitude, so decoding the waveform requires
+Griffin-Lim to invent phase from scratch, and the invented phase does not
+stay coherent frame to frame. The audible signature is a faint warble on
+every syllable. Adding Gaussians narrows the warble. The warble does not go
+away.</p>
+<p>That is an informative failure. It tells us where the representation needs
+to grow, and it does so without casting doubt on the direction. Variant B
+takes the next step.</p>
+    <figure><img src="../assets/post-1-1_variant-a_reconstruction.png" alt="Target vs rendered spectrogram at 1000 Gaussians." loading="lazy"/><figcaption>Target vs rendered spectrogram at 1000 Gaussians.</figcaption></figure>
+<figure><img src="../assets/post-1-2_variant-a_gaussian-positions.png" alt="Where the Gaussians land in time-frequency." loading="lazy"/><figcaption>Where the Gaussians land in time-frequency.</figcaption></figure>
+<figure><img src="../assets/post-1-3_variant-a_loss-curve.png" alt="Convergence curve." loading="lazy"/><figcaption>Convergence curve.</figcaption></figure>
+
+  </article>
+</section>
+<footer>
+  <div class="row">
+    <span>Built with <span class="heart">&hearts;</span> in Berlin</span>
+    <a href="https://github.com/feamando/sgs">github.com/feamando/sgs</a>
+    <span>Nikita Gorshkov</span>
+    <a href="mailto:ngorshkov@proton.me">ngorshkov@proton.me</a>
+  </div>
+</footer>
+</body>
+</html>
